@@ -12,11 +12,15 @@ type SimpleAsset struct{}
 
 // Init
 func (t *SimpleAsset) Init(stub shim.ChaincodeStubInterface) peer.Response {
-	// Get the args from the transaction proposal
+	return shim.Success(nil)
+}
+
+// initState initialize the data state.
+func initState(stub shim.ChaincodeStubInterface) peer.Response {
 	stub.PutState("a", []byte("This is A's secret JNSDLJNSD"))
 	stub.PutState("b", []byte("This is B's secret EREFKSNKS"))
 	stub.PutState("readToken", []byte("0"))
-	return shim.Success(nil)
+	return shim.Success([]byte("State initialized"))
 }
 
 // readAorB takes a choice for either a or b and allows the user to read one of them.
@@ -42,17 +46,17 @@ func (t *SimpleAsset) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 	// Extract the function and args from the transaction proposal
 	fn, args := stub.GetFunctionAndParameters()
 	// We test our vulnerability demonstration here
-	if fn == "readAorB" {
+	if fn == "initialize" {
+		// Initialize the state of secret and token
+		initState(stub)
+		return shim.Success([]byte("Initialized State"))
+	} else if fn == "readAorB" {
 		if len(args) >= 1 {
 			readAorB(string(args[0]), stub)
 		}
-		return shim.Success([]byte("Read not allowed"))
-	} else if fn == "reset" {
-		// resets the read token and sets a and b. call this before calling test
-		return shim.Success([]byte("Read completed"))
+		return shim.Success([]byte("Invalid arguments."))
 	}
-	// Return the result as success payload
-	return shim.Success([]byte("Success"))
+	return shim.Success([]byte("Invalid endpoint"))
 }
 
 // main function starts up the chaincode in the container during instantiate
