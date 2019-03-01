@@ -48,11 +48,10 @@ func (t *SimpleAsset) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 	// We test our vulnerability demonstration here
 	if fn == "initialize" {
 		// Initialize the state of secret and token
-		initState(stub)
-		return shim.Success([]byte("Initialized State"))
+		return initState(stub)
 	} else if fn == "readAorB" {
 		if len(args) >= 1 {
-			readAorB(string(args[0]), stub)
+			return readAorB(string(args[0]), stub)
 		}
 		return shim.Success([]byte("Invalid arguments."))
 	}
