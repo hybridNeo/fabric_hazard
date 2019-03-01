@@ -1,5 +1,5 @@
 # Potential privacy hazard in Fabric chaincode
-This repository tries to demonstrate a potential privacy hazard in Chaincodes due to the execute and then order paradigm of Fabric
+This repository tries to demonstrate a potential privacy hazard in Chaincodes due to the "**execute and then order**" paradigm of Fabric
 
 ## What's going on ?
 * This is an example chaincode that someone could reasonably try to write. It exposes one endpoint, called "ReadAorB". 
