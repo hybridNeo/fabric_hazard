@@ -12,7 +12,7 @@ the intended security policy.
 * Due to the execute first and then order philosophy we are able to read both the secret values if we contact two peers simultaneously
     as the commit transaction occurs afterwards.
 
-    Screenshot : [Imgur](https://i.imgur.com/YktAb3y.png)
+    Screenshot : [Imgur](https://i.imgur.com/qvc7iFB.png)
 
 ## Potential Hazards
 This illustration of reading A or B is just a toy example, but enforcing read-access control in this programmatic way is representative of what chaincode authors may write in 
